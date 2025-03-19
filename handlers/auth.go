@@ -77,3 +77,42 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
+func Register(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Redirect(w, r, "/signup", http.StatusSeeOther)
+		return
+	}
+
+	name := r.FormValue("name")
+	email := r.FormValue("email")
+	password := r.FormValue("password")
+
+	if name == "" || email == "" || password == "" || !strings.HasSuffix(email, "@ynov.com") {
+		http.Redirect(w, r, "/signup", http.StatusSeeOther)
+		return
+	}
+
+	users[email] = User{
+		Name:     name,
+		Email:    email,
+		Password: password,
+	}
+
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
+}
+
+// La fonction Logout va supprimer la session de l'utilisateur
+// On redirige ensuite l'utilisateur vers la page d'accueil
+// Et setcookie va supprimer le cookie de session
+func Logout(w http.ResponseWriter, r *http.Request) {
+	cookie, _ := r.Cookie("session")
+	if cookie != nil {
+		delete(sessions, cookie.Value)
+		http.SetCookie(w, &http.Cookie{
+			Name:   "session",
+			Value:  "",
+			MaxAge: -1,
+		})
+	}
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
