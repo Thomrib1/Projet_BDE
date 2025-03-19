@@ -1,0 +1,139 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #c2e1d6;
+    color: #2a2d30;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Header */
+header {
+    background-color: #a589bf;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Section Contact */
+#contact {
+    background: white;
+    padding: 30px;
+    margin: 30px auto;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#contact h2 {
+    color: #a589bf;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+input, textarea {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #a589bf;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #a589bf;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #8c6cae;
+}
+
+/* Liens */
+a {
+    color: #2a2d30;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #a589bf;
+}
+
+/* Section Save the Date */
+#events {
+    background: white;
+    padding: 30px;
+    margin: 30px auto;
+    width: 60%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+#events ul {
+    list-style: none;
+    padding: 0;
+}
+
+#events li {
+    background: #f9f9f9;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 5px;
+    border-left: 5px solid #a589bf;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#events strong {
+    color: #a589bf;
+}
+
+/* Footer */
+footer {
+    background-color: #a589bf;
+    color: white;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 20px;
+}
