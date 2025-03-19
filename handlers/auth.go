@@ -45,7 +45,7 @@ func SignupPage(w http.ResponseWriter, r *http.Request) {
 // La func Authenticate va vérifier les informations de connexion
 // Si les informations sont correctes, on crée une session pour l'utilisateur
 // On redirige ensuite l'utilisateur vers le tableau de bord
-// Sinon, on le redirige vers la page de connexion
+// Sinon on le redirige vers la page de connexion
 func Authenticate(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
@@ -115,4 +115,21 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+// IsLoggedIn vérifie si l'utilisateur est connecté
+// On vérifie si la session existe dans la map sessions
+func IsLoggedIn(sessionID string) bool {
+	_, exists := sessions[sessionID]
+	return exists
+}
+
+// GetUserFromSession récupère l'utilisateur à partir de la session
+// On utilise l'email stocké dans la session pour récupérer l'utilisateur
+func GetUserFromSession(sessionID string) User {
+	email, exists := sessions[sessionID]
+	if !exists {
+		return User{}
+	}
+	return users[email]
 }
