@@ -3,30 +3,18 @@ package models
 import (
 	"crypto/rand"
 	"encoding/base64"
-
-	"golang.org/x/crypto/bcrypt"
 )
 
-// User représente un utilisateur du système
 type User struct {
-	Name         string
-	Email        string
-	PasswordHash string
+	Name     string
+	Email    string
+	Password string
 }
 
-// HashPassword génère un hash bcrypt à partir d'un mot de passe
-func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	return string(bytes), err
-}
-
-// CheckPasswordHash compare un mot de passe avec un hash
-func CheckPasswordHash(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
-}
-
-// GenerateSessionID génère un identifiant de session aléatoire
+// La Fonction GenerateSessionID va générer un identifiant de session aléatoire
+// qui sera utilisé pour identifier les utilisateurs connectés.
+// La fonction utilise la bibliothèque crypto/rand pour générer des octets aléatoires
+// et les encode en base64 pour obtenir une chaîne de caractères.
 func GenerateSessionID() string {
 	b := make([]byte, 32)
 	_, err := rand.Read(b)
