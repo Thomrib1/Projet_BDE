@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header {
+    background-color: #4A90E2;
+    color: white;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+section {
+    padding: 20px;
+}
+
+.evenement, .membre {
+    background: #f4f4f4;
+    margin: 10px auto;
+    padding: 15px;
+    width: 80%;
+    border-radius: 10px;
+}
+
+.membre img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+}
