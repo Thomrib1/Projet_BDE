@@ -6,6 +6,8 @@ import (
 	"html/template"
 	"net/http"
 	"strings"
+
+	"projet_BDE/models"
 )
 
 type User struct {
@@ -13,11 +15,6 @@ type User struct {
 	Email    string
 	Password string
 }
-
-// On va créer un système d'authentification pour le site
-// Pour cela on crée des variables pour stocker les sessions et les utilisateurs temporairement
-var sessions = make(map[string]string)
-var users = make(map[string]User) // Changé de models.User à User
 
 // GenerateSessionID génère un identifiant de session aléatoire
 func GenerateSessionID() string {
@@ -36,7 +33,7 @@ func LoginPage(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-// SignupPage affiche la page d'inscription
+// Page d'inscription
 func SignupPage(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles("templates/signup.html")
 	tmpl.Execute(w, nil)
@@ -53,19 +50,27 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 	}
 	email := r.FormValue("email")
 	password := r.FormValue("password")
+
 	if !strings.HasSuffix(email, "@ynov.com") {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
 
-	user, exists := users[email]
-	if !exists || password != user.Password {
+	user, err := models.GetUserByEmail(email)
+	if err != nil || !models.CheckPassword(password, user.Password) {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
-	sessionID := GenerateSessionID()
-	sessions[sessionID] = email
 
+	// Création de la session en base de données
+	sessionID := GenerateSessionID()
+	_, err = models.DB.Exec("INSERT INTO sessions (session_id, user_email) VALUES (?, ?)", sessionID, email)
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
+	// Création du cookie de session
 	cookie := &http.Cookie{
 		Name:     "session",
 		Value:    sessionID,
@@ -74,9 +79,10 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 	}
 	http.SetCookie(w, cookie)
-
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
+
+// Inscription des utilisateurs
 func Register(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Redirect(w, r, "/signup", http.StatusSeeOther)
@@ -92,10 +98,10 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	users[email] = User{
-		Name:     name,
-		Email:    email,
-		Password: password,
+	err := models.CreateUser(name, email, password)
+	if err != nil {
+		http.Redirect(w, r, "/signup", http.StatusSeeOther)
+		return
 	}
 
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
@@ -105,9 +111,12 @@ func Register(w http.ResponseWriter, r *http.Request) {
 // On redirige ensuite l'utilisateur vers la page d'accueil
 // Et setcookie va supprimer le cookie de session
 func Logout(w http.ResponseWriter, r *http.Request) {
-	cookie, _ := r.Cookie("session")
-	if cookie != nil {
-		delete(sessions, cookie.Value)
+	cookie, err := r.Cookie("session")
+	if err == nil {
+		// Suppression de la session en base
+		_, _ = models.DB.Exec("DELETE FROM sessions WHERE session_id = ?", cookie.Value)
+
+		// Suppression du cookie
 		http.SetCookie(w, &http.Cookie{
 			Name:   "session",
 			Value:  "",
@@ -120,16 +129,19 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 // IsLoggedIn vérifie si l'utilisateur est connecté
 // On vérifie si la session existe dans la map sessions
 func IsLoggedIn(sessionID string) bool {
-	_, exists := sessions[sessionID]
-	return exists
+	var email string
+	err := models.DB.QueryRow("SELECT user_email FROM sessions WHERE session_id = ?", sessionID).Scan(&email)
+	return err == nil
 }
 
 // GetUserFromSession récupère l'utilisateur à partir de la session
 // On utilise l'email stocké dans la session pour récupérer l'utilisateur
-func GetUserFromSession(sessionID string) User {
-	email, exists := sessions[sessionID]
-	if !exists {
-		return User{}
+func GetUserFromSession(sessionID string) models.User {
+	var user models.User
+	err := models.DB.QueryRow("SELECT id, name, email FROM users WHERE email = (SELECT user_email FROM sessions WHERE session_id = ?)", sessionID).
+		Scan(&user.ID, &user.Name, &user.Email)
+	if err != nil {
+		return models.User{}
 	}
-	return users[email]
+	return user
 }
