@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - BDE Ynov</title>
+    <title>Contact - BDE Ynov</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,10 +20,20 @@
         </nav>
     </header>
 
-    <section class="accueil">
-        <h1>Bienvenue sur le site du BDE Ynov Paris</h1>
-        <p>Le Bureau des Étudiants organise des événements incroyables pour faire de ta vie étudiante une expérience unique ! 🎉</p>
-        <a href="https://www.instagram.com/ynovparisbde/" target="_blank" class="btn">Suivez-nous sur Instagram</a>
+    <section>
+        <h1>Contacte-nous</h1>
+        <form>
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
+            
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Envoyer</button>
+        </form>
     </section>
 
     <footer>
