@@ -5,14 +5,10 @@ body {
     text-align: center;
 }
 
-header {
-    background-color: #4A90E2;
-    color: white;
-    padding: 20px;
-}
-
-h1, h2 {
-    color: #333;
+header h1 {
+    color: rgb(255, 255, 255);  /* Change la couleur du texte en blanc */
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ajoute une ombre pour mieux lire */
 }
 
 section {
@@ -39,4 +35,12 @@ footer {
     color: white;
     padding: 10px;
     margin-top: 20px;
+}
+.logo-bde {
+    width: 150px;  
+    height: auto;   
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    top: 10x;
 }
