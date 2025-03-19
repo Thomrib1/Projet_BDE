@@ -14,6 +14,7 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
+
 	user := GetUserFromSession(cookie.Value)
 	data := struct {
 		Name  string
@@ -22,6 +23,7 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		Name:  user.Name,
 		Email: user.Email,
 	}
+
 	tmpl, _ := template.ParseFiles("templates/dashboard.html")
 	tmpl.Execute(w, data)
 }
