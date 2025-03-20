@@ -1,0 +1,79 @@
+body {
+    background-color: #b9afd7; /* Violet clair */
+    color: #2a2d30; /* Gris foncé pour le texte */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header h1 {
+    color: rgb(255, 255, 255);  /* Change la couleur du texte en blanc */
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ajoute une ombre pour mieux lire */
+}
+
+section {
+    padding: 20px;
+}
+
+.evenement, .membre {
+    background: #f4f4f4;
+    margin: 10px auto;
+    padding: 15px;
+    width: 80%;
+    border-radius: 10px;
+}
+
+.membre img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+}
+.logo-bde {
+    width: 150px;  
+    height: auto;   
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    top: 10x;
+}
+nav {
+    background-color: #2a2d30; /* Gris foncé de la charte graphique */
+    padding: 10px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+nav ul li a:hover {
+    background: #b9afd7; /* Violet clair de la charte */
+    color: #2a2d30; /* Gris foncé pour le contraste */
+}
