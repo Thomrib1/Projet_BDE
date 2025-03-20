@@ -16,7 +16,7 @@ func main() {
 	ensureDirectoryExists("static")
 	ensureDirectoryExists("static/images")
 
-	// Configurer les routes pour les pages HTML
+	http.Handle("/templates/images/", http.StripPrefix("/templates/images/", http.FileServer(http.Dir("templates/images"))))
 	http.HandleFunc("/", serveHTMLFile("templates/home.html"))
 	http.HandleFunc("/equipe", serveHTMLFile("templates/equipe.html"))
 	http.HandleFunc("/contact", serveHTMLFile("templates/contact.html"))
