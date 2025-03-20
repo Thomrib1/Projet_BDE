@@ -16,7 +16,6 @@ type User struct {
 	Password string
 }
 
-// GenerateSessionID génère un identifiant de session aléatoire
 func GenerateSessionID() string {
 	b := make([]byte, 32)
 	_, err := rand.Read(b)
@@ -62,7 +61,6 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Création de la session en base de données
 	sessionID := GenerateSessionID()
 	_, err = models.DB.Exec("INSERT INTO sessions (session_id, user_email) VALUES (?, ?)", sessionID, email)
 	if err != nil {
@@ -70,7 +68,6 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Création du cookie de session
 	cookie := &http.Cookie{
 		Name:     "session",
 		Value:    sessionID,
@@ -82,7 +79,6 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 
-// Inscription des utilisateurs
 func Register(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Redirect(w, r, "/signup", http.StatusSeeOther)
@@ -93,14 +89,14 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 
-	if name == "" || email == "" || password == "" || !strings.HasSuffix(email, "@ynov.com") {
-		http.Redirect(w, r, "/signup", http.StatusSeeOther)
+	if !strings.HasSuffix(email, "@ynov.com") {
+		http.Error(w, "Seuls les emails Ynov sont autorisés", http.StatusBadRequest)
 		return
 	}
 
 	err := models.CreateUser(name, email, password)
 	if err != nil {
-		http.Redirect(w, r, "/signup", http.StatusSeeOther)
+		http.Error(w, "Erreur lors de l'inscription: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -113,10 +109,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 func Logout(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session")
 	if err == nil {
-		// Suppression de la session en base
 		_, _ = models.DB.Exec("DELETE FROM sessions WHERE session_id = ?", cookie.Value)
 
-		// Suppression du cookie
 		http.SetCookie(w, &http.Cookie{
 			Name:   "session",
 			Value:  "",

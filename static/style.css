@@ -1,6 +1,6 @@
 body {
-    background-color: #b9afd7; /* Violet clair */
-    color: #2a2d30; /* Gris foncé pour le texte */
+    background-color: #b9afd7;
+    color: #2a2d30;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -8,9 +8,9 @@ body {
 }
 
 header h1 {
-    color: rgb(255, 255, 255);  /* Change la couleur du texte en blanc */
+    color: rgb(255, 255, 255);
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ajoute une ombre pour mieux lire */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 section {
@@ -47,7 +47,7 @@ footer {
     top: 10x;
 }
 nav {
-    background-color: #2a2d30; /* Gris foncé de la charte graphique */
+    background-color: #2a2d30;
     padding: 10px;
     text-align: center;
 }
@@ -74,6 +74,6 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background: #b9afd7; /* Violet clair de la charte */
-    color: #2a2d30; /* Gris foncé pour le contraste */
+    background: #b9afd7;
+    color: #2a2d30;
 }

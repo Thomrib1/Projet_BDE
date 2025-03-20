@@ -4,41 +4,37 @@ import (
 	"database/sql"
 	"log"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 var DB *sql.DB
 
-// InitDB va initialiser la base de données avec le nom du fichier
-// Si la base de données n'existe pas, elle sera créée
-// On crée également les tables users et sessions
 func InitDB(dataSourceName string) {
 	var err error
-	DB, err = sql.Open("sqlite3", dataSourceName)
+	DB, err = sql.Open("sqlite", dataSourceName)
 	if err != nil {
 		log.Fatalf("Erreur lors de l'ouverture de la base de données: %v", err)
 	}
 
-	createUsersTable := `
+	createTableQuery := `
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL
     );`
-	_, err = DB.Exec(createUsersTable)
+	_, err = DB.Exec(createTableQuery)
 	if err != nil {
 		log.Fatalf("Erreur lors de la création de la table users: %v", err)
 	}
 
-	createSessionsTable := `
+	createSessionsTableQuery := `
     CREATE TABLE IF NOT EXISTS sessions (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        session_id TEXT UNIQUE NOT NULL,
+        session_id TEXT PRIMARY KEY,
         user_email TEXT NOT NULL,
-        FOREIGN KEY(user_email) REFERENCES users(email) ON DELETE CASCADE
+        FOREIGN KEY (user_email) REFERENCES users(email)
     );`
-	_, err = DB.Exec(createSessionsTable)
+	_, err = DB.Exec(createSessionsTableQuery)
 	if err != nil {
 		log.Fatalf("Erreur lors de la création de la table sessions: %v", err)
 	}

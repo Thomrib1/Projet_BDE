@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion / Inscription - BDE Ynov Paris</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Connexion ou Inscription</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/equipe">Notre Équipe</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/calendrier">Save the Date</a></li>
+            <li><a href="/login">Connexion</a></li>
+        </ul>
+    </nav>
+    <section id="connexion">
+        <h2>Connexion</h2>
+        <form action="/auth" method="post">
+            <label for="email">Email :</label><br>
+            <input type="email" id="email" name="email" placeholder="Votre email" required><br><br>
+
+            <label for="password">Mot de passe :</label><br>
+            <input type="password" id="password" name="password" placeholder="Votre mot de passe" required><br><br>
+
+            <button type="submit">Se connecter</button>
+        </form>
+    </section>
+
+    <section id="inscription">
+        <h2>Créer un compte</h2>
+        <form action="/register" method="post">
+            <label for="name">Nom complet :</label><br>
+            <input type="text" id="name" name="name" placeholder="Votre nom complet" required><br><br>
+
+            <label for="email">Email Ynov :</label><br>
+            <input type="email" id="email" name="email" placeholder="prenom.nom@ynov.com" required><br><br>
+
+            <label for="password">Mot de passe :</label><br>
+            <input type="password" id="password" name="password" placeholder="Votre mot de passe" required><br><br>
+
+            <button type="submit">Créer un compte</button>
+        </form>
+    </section>
+    <footer>
+        <p>Contactez-nous : <a href="mailto:bdepyc92@gmail.com">bdepyc92@gmail.com</a></p>
+    </footer>
+</body>
+</html>
