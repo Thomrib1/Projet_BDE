@@ -47,24 +47,30 @@ footer {
     top: 10x;
 }
 nav {
-    background-color: #2a2d30; /* Gris foncé de la charte graphique */
+    background-color: #2a2d30; 
     padding: 10px;
     text-align: center;
 }
 
 nav ul {
+    display: flex;
+    justify-content: space-around; 
     list-style: none;
     padding: 0;
+    background-color: black;
     margin: 0;
 }
 
 nav ul li {
     display: inline;
     margin: 0 15px;
+    flex-grow: 1; 
+    text-align: center;
 }
 
 nav ul li a {
     color: white;
+    display: block;
     text-decoration: none;
     font-size: 18px;
     font-weight: bold;
@@ -74,6 +80,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background: #b9afd7; /* Violet clair de la charte */
-    color: #2a2d30; /* Gris foncé pour le contraste */
+    background: #b9afd7; 
+    color: #2a2d30; 
+    background-color: #444;
 }
