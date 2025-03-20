@@ -13,8 +13,12 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	cookie, err := r.Cookie("session") // On vérifie si l'utilisateur est connecté
-	isLoggedIn := (err == nil && IsLoggedIn(cookie.Value))
+	var isLoggedIn bool
+	cookie, err := r.Cookie("session")
+	if err == nil {
+		isLoggedIn = IsLoggedIn(cookie.Value)
+	}
+
 	data := struct {
 		LoggedIn bool
 	}{
